@@ -4,6 +4,10 @@
 
 [![Build Status](https://secure.travis-ci.org/thanpolas/nschema.png?branch=master)](http://travis-ci.org/thanpolas/nschema)
 
+## STILL WORK IN PROGRESS
+
+Nothing exists yet, hang on.
+
 ## Install
 
 Install the module using NPM:
