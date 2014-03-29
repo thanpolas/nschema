@@ -11,6 +11,15 @@ Install the module using NPM:
 ```
 npm install nschema --save
 ```
+## <a name='TOC'>Table of Contents</a>
+
+1. [Overview](#overview)
+1. [API](#api)
+    1. [nSchema Types](#nschema-types)
+    1. [nSchema Properties](#nschema-properties)
+    1. [Scopes](#scopes)
+    1. [Validators](#validators)
+1. [Relations(#relations)
 
 ## Overview
 
@@ -38,6 +47,8 @@ var schema = {
 };
 ```
 
+**[[⬆]](#TOC)**
+
 ### nSchema Types
 
 * `string` The string type.
@@ -47,6 +58,8 @@ var schema = {
 * `array` The Array type.
 * `object` The Object type.
 * `*` Any type.
+
+**[[⬆]](#TOC)**
 
 ### nSchema Properties
 
@@ -58,6 +71,8 @@ When the value is an Object, the following properties are available:
 * **validators** `Object` Define any number of validators, built-in or custom. [See Validators](#validators)
 * **scopes** `Object` Define a set of scopes, [see Scopes](#scopes).
 
+**[[⬆]](#TOC)**
+
 #### Scopes
 
 Scopes determine the visibility and write-ability of an attribute. You may define multiple scopes representing business logic based on your particular scenario. A common set of scopes for a table of users would be: 
@@ -67,6 +82,7 @@ scopes: {
     self: true, // shorthand for { get: true, set: true }
     registered: { get: true } // defaults always to true so this implies { set: true }
     anonymous: false // shorthand for { get: false, set: false }
+}
 ```
 
 The scope definition comprises of `get` and `set` boolean properties. The `get` property applies to all reading methods, while the `set` applies to all write methods.
@@ -91,6 +107,8 @@ password: {
 
 The Scopes API was designed by [@jrpereira](https://github.com/jrpereira) while [discussing for an implementation of scopes on a Sequelize issue](https://github.com/sequelize/sequelize/issues/1462#issuecomment-38448500).
 
+**[[⬆]](#TOC)**
+
 ### Validators
 
 The following built-in validators are available:
@@ -111,6 +129,8 @@ schema = {
 }
 ```
 
+**[[⬆]](#TOC)**
+
 #### Custom Validators
 
 You can define a custom validator by simply providing a function as the validator's value, to fail the validation use Javascript's `throw` keyword.
@@ -124,6 +144,8 @@ validators: {
     }
 };
 ```
+
+**[[⬆]](#TOC)**
 
 #### Asynchronous Custom Validators
 
@@ -147,6 +169,12 @@ validators: {
 }
 ```
 > When using a callback, if you set as invoking argument any value that's truthy it will fail the validator and stop the write operation.
+
+**[[⬆]](#TOC)**
+
+## Relations
+
+WIP...
 
 ## Release History
 
