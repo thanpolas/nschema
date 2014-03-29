@@ -174,7 +174,58 @@ validators: {
 
 ## Relations
 
-WIP...
+Here's how to define the three type of relationships:
+
+```js
+var author = nschema({name: string});
+
+var book = nschema({
+    name: 'string',
+    writer: author, // one-to-one relationship
+    isbn: {
+        type: 'string',
+        required: true,
+    },
+});
+
+var publisher = nschema({
+    name: 'string',
+    books: [book], // one-to-many relationship
+});
+
+nschema.many(author, publisher); // many-to-many relationship
+```
+
+These relationships are not required, so you can create an author without having a publisher defined. If you require that a relation item be defined you can use the expanded format of the attribute:
+
+```js
+var author = nschema({name: string});
+
+var book = nschema({
+    name: 'string',
+    writer: {
+        type: author, // one-to-one relationship
+        required: true,
+    },
+    isbn: {
+        type: 'string',
+        required: true,
+    },
+});
+
+var publisher = nschema({
+    name: 'string',
+    books: {
+        type: [book], // one-to-many relationship
+        required: true,
+    }
+});
+
+// many-to-many relationship with options
+nschema.many(author, publisher, {
+    required: true,
+});
+```
 
 ## Release History
 
