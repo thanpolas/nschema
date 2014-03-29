@@ -1,6 +1,6 @@
 # nSchema
 
-> Node Schema Abstraction Layer
+> Node Schema Abstraction Layer.
 
 [![Build Status](https://secure.travis-ci.org/thanpolas/nschema.png?branch=master)](http://travis-ci.org/thanpolas/nschema)
 
@@ -21,9 +21,12 @@ Node Schema provides a normalized Schema API over popular ORM and database drive
 * [Sequelize][] For SQL databases like Postgres, MySQL, SQLlite, MariaDB, etc.
 * [Mongoose][] For Mongo DB.
 
+[Mongoose]: http://mongoosejs.com/
+[Sequelize]: http://sequelizejs.com/
+
 ## API
 
-A Node Schema a plain Object with key/value pairs. *Key* represents the attribute's name and the *Value* the type and properties of the attribute.
+A Node Schema is a plain Object with key/value pairs. *Key* represents the attribute's name and the *Value* the type and properties of the attribute.
 
 ```js
 var schema = {
@@ -52,7 +55,7 @@ When the value is an Object, the following properties are available:
 * **type** `string` **Required** The nSchema Type.
 * **required** `boolean` Default: `false` Set to true to make the attribute required.
 * **allowNull** `boolean` Default: `false` Set to true to allow null values.
-* **validators** `Object` Define any number of validators, built-in or custom.
+* **validators** `Object` Define any number of validators, built-in or custom. [See Validators](#validators)
 * **scopes** `Object` Define a set of scopes, [see Scopes](#scopes).
 
 #### Scopes
@@ -88,7 +91,62 @@ password: {
 
 The Scopes API was designed by [@jrpereira](https://github.com/jrpereira) while [discussing for an implementation of scopes on a Sequelize issue](https://github.com/sequelize/sequelize/issues/1462#issuecomment-38448500).
 
+### Validators
 
+The following built-in validators are available:
+
+* **min** `number` Set the minimum length if a string or value if number.
+* **max** `number` Set the maximum length if a string or value if number.
+
+```js
+schema = {
+    name: {
+        type: 'string',
+        allowNull: false,
+        validators: {
+            min: 2,
+            max: 30,
+        }
+    }
+}
+```
+
+#### Custom Validators
+
+You can define a custom validator by simply providing a function as the validator's value, to fail the validation use Javascript's `throw` keyword.
+
+```js
+validators: {
+    custom: function(value) {
+        if (!value) {
+            throw new Error('Not good');
+        }
+    }
+};
+```
+
+#### Asynchronous Custom Validators
+
+There are two ways you can define an asynchronous custom validator, either by defining the second argument and use it as a callback or return a Promises/A+ compliant promise.
+
+```js
+validators: {
+    custom: function(value, cb) {
+        doSomethingAsync(value, function(outcome) {
+            if (!outcome) {
+                cb(new Error('Not good'));
+            } else {
+                cb();
+            }
+
+        }
+    },
+    usingPromise: function(value) {
+        return doSomethindAsync(value);
+    }
+}
+```
+> When using a callback, if you set as invoking argument any value that's truthy it will fail the validator and stop the write operation.
 
 ## Release History
 
@@ -98,3 +156,8 @@ The Scopes API was designed by [@jrpereira](https://github.com/jrpereira) while 
 ## License
 
 Copyright (c) 2014 Thanasis Polychronakis. Licensed under the MIT license.
+
+Original work was done in the [Entity][] repository. Loosely inspired by [mschema][].
+
+[mschema]: https://github.com/mschema/mschema/
+[entity]: https://github.com/thanpolas/entity/
