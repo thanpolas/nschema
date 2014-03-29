@@ -19,7 +19,7 @@ npm install nschema --save
     1. [nSchema Properties](#nschema-properties)
     1. [Scopes](#scopes)
     1. [Validators](#validators)
-1. [Relations(#relations)
+1. [Relations](#relations)
 
 ## Overview
 
