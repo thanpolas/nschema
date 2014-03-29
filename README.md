@@ -42,13 +42,15 @@ Node Schema provides a normalized Schema API over popular ORM and database drive
 A Node Schema is a plain Object with key/value pairs. *Key* represents the attribute's name and the *Value* the type and properties of the attribute.
 
 ```js
-var schema = {
+var nschema = require('nschema');
+
+var user = nschema({
     name: 'string',
     password: {
         type: 'string',
         required: true,
     },
-};
+});
 ```
 
 **[[⬆]](#TOC)**
